@@ -1,0 +1,12 @@
+[Unit]
+Description=GREENHOUSE_WIFI receiver
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/greenhouse-monitor
+ExecStart=/usr/bin/python3 receiver/receiver.py --host 0.0.0.0 --port 8081 --log /opt/greenhouse-monitor/GREENHOUSE_EDGE-readings.jsonl --snapshot-log /opt/greenhouse-monitor/GREENHOUSE_EDGE-15m-snapshots.jsonl --snapshot-interval 900
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

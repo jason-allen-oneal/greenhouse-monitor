@@ -1,0 +1,64 @@
+# Credentials and local config
+secrets.py
+**/secrets.py
+*.secret
+*.secrets
+.env
+.env.*
+!.env.example
+config.local.*
+local.*
+dashboard/greenhouse-weather.json
+
+# Logs and raw sensor history
+*.log
+*.pid
+*.jsonl
+readings*.jsonl
+*readings*.jsonl
+*snapshots*.jsonl
+receiver.log
+receiver-*.log
+chromium.log
+server.log
+greenhouse-monitor.log
+
+# Runtime databases/state
+*.sqlite
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
+*.sqlite-shm
+*.sqlite-wal
+models/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local screenshots/captures/backups
+*.png
+*.jpg
+*.jpeg
+*.gif
+dashboard-check.*
+esp32-backups/
+backups/
+captures/

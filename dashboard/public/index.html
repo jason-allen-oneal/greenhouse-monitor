@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GREENHOUSE_WIFI Monitor</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <h1>GREENHOUSE_WIFI</h1>
+        <p id="subtitle">Waiting for sensor data</p>
+      </div>
+      <div class="actions">
+        <div id="live-pill" class="pill warn"><span></span><b>Checking</b></div>
+        <button id="refresh" type="button" title="Refresh now" aria-label="Refresh now">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v6h-6"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <nav class="nav-tabs">
+      <a href="/" class="active" data-metric="overview">Overview</a>
+      <a href="/temperature" data-metric="temperature">Temperature</a>
+      <a href="/humidity" data-metric="humidity">Humidity</a>
+      <a href="/pressure" data-metric="pressure">Pressure</a>
+      <a href="/gas" data-metric="gas">Gas</a>
+    </nav>
+
+    <section class="summary" aria-label="Current greenhouse readings">
+      <article class="metric primary">
+        <div class="metric-head">
+          <div class="metric-head-top">
+            <span class="metric-primary-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M12 2v20M17 7H7"/><path d="M12 18a6 6 0 0 0 0-12v12z"/></svg>
+            </span>
+            <span class="metric-label">Temperature</span>
+          </div>
+          <small id="temp-c" class="metric-sub">-- C</small>
+        </div>
+        <div class="metric-value">
+          <strong id="temp-f">--</strong>
+          <em>°F</em>
+        </div>
+      </article>
+      <article class="metric">
+        <div class="metric-head">
+          <div class="metric-head-top">
+            <span class="metric-humidity-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            </span>
+            <span class="metric-label">Humidity</span>
+          </div>
+        </div>
+        <div class="metric-value">
+          <strong id="humidity">--</strong>
+          <em>%</em>
+        </div>
+      </article>
+      <article class="metric">
+        <div class="metric-head">
+          <div class="metric-head-top">
+            <span class="metric-pressure-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M18 12h-12"/></svg>
+            </span>
+            <span class="metric-label">Pressure</span>
+          </div>
+          <small id="pressure-trend" class="trend-indicator">--</small>
+        </div>
+        <div class="metric-value">
+          <strong id="pressure">--</strong>
+          <em>hPa</em>
+        </div>
+      </article>
+      <article class="metric">
+        <div class="metric-head">
+          <div class="metric-head-top">
+            <span class="metric-gas-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M3 3h18v18H3z"/><path d="M9 9h6v6H9z"/></svg>
+            </span>
+            <span class="metric-label">Gas</span>
+          </div>
+          <span id="gas-validity" class="validity-indicator"><span class="dot"></span><span class="text">--</span></span>
+        </div>
+        <div class="metric-value">
+          <strong id="gas">--</strong>
+          <em>kΩ</em>
+        </div>
+      </article>
+    </section>
+
+    <section class="trend-grid" aria-label="24-hour Trends">
+      <article class="trend panel">
+        <div class="chart-head">
+          <h2>Temperature (24h)</h2>
+        </div>
+        <canvas id="temp-chart" width="900" height="280"></canvas>
+      </article>
+      <article class="trend panel">
+        <div class="chart-head">
+          <h2>Humidity (24h)</h2>
+        </div>
+        <canvas id="humidity-chart" width="900" height="280"></canvas>
+      </article>
+      <article class="trend panel">
+        <div class="chart-head">
+          <h2>Pressure (24h)</h2>
+        </div>
+        <canvas id="pressure-chart" width="900" height="280"></canvas>
+      </article>
+      <article class="trend panel">
+        <div class="chart-head">
+          <h2>Gas (24h)</h2>
+        </div>
+        <canvas id="gas-chart" width="900" height="280"></canvas>
+      </article>
+    </section>
+
+    <section class="details" aria-label="System status">
+      <details id="status-panel" class="panel collapsible full-width">
+        <summary>
+          <h2>Sensor & ESP32 Status</h2>
+        </summary>
+        <dl>
+          <div><dt>Node</dt><dd id="node">--</dd></div>
+          <div><dt>Route</dt><dd id="route">--</dd></div>
+          <div><dt>ESP32 IP</dt><dd id="ip">--</dd></div>
+          <div><dt>Sequence</dt><dd id="seq">--</dd></div>
+          <div><dt>Free Memory</dt><dd id="free-mem">--</dd></div>
+          <div><dt>Uptime</dt><dd id="uptime">--</dd></div>
+          <div><dt>WiFi SSID</dt><dd id="wifi-ssid">--</dd></div>
+          <div><dt>Received</dt><dd id="received">--</dd></div>
+          <div><dt>Age</dt><dd id="age">--</dd></div>
+          <div><dt>Last snapshot</dt><dd id="snapshot">--</dd></div>
+          <div><dt>Next snapshot</dt><dd id="next-snapshot">--</dd></div>
+          <div><dt>Forwarding</dt><dd id="forwarding">SENSOR_RECEIVER</dd></div>
+        </dl>
+      </details>
+    </section>
+
+    <section class="nowcast-grid" aria-label="Local nowcast">
+      <article class="panel nowcast-card rain-card">
+        <div class="chart-head">
+          <h2>Local Rain Nowcast</h2>
+          <span id="nowcast-model" class="model-badge">--</span>
+        </div>
+        <div class="rain-probs">
+          <div><dt>30 min</dt><dd id="rain-30m">--</dd></div>
+          <div><dt>1 hour</dt><dd id="rain-1h">--</dd></div>
+          <div><dt>3 hours</dt><dd id="rain-3h">--</dd></div>
+        </div>
+        <p id="nowcast-explanation" class="nowcast-explanation">Collecting local greenhouse sensor trends.</p>
+      </article>
+      <article class="panel nowcast-card">
+        <div class="chart-head">
+          <h2>External Weather</h2>
+        </div>
+        <dl class="external-weather-list">
+          <div><dt>Source</dt><dd id="external-weather-source">--</dd></div>
+          <div><dt>Forecast</dt><dd id="external-weather-forecast">--</dd></div>
+          <div><dt>Public rain chance</dt><dd id="external-weather-pop">--</dd></div>
+          <div><dt>NWS alerts</dt><dd id="external-weather-alerts">--</dd></div>
+        </dl>
+        <p id="external-weather-note" class="nowcast-explanation">External weather supplement is optional.</p>
+      </article>
+      <article class="panel nowcast-card">
+        <div class="chart-head">
+          <h2>Next Hour Trend</h2>
+        </div>
+        <dl class="trend-predictions">
+          <div><dt>Temp</dt><dd id="nowcast-temp-change">--</dd></div>
+          <div><dt>Humidity</dt><dd id="nowcast-humidity-change">--</dd></div>
+          <div><dt>Pressure</dt><dd id="nowcast-pressure-change">--</dd></div>
+          <div><dt>Storm risk</dt><dd id="nowcast-storm-risk">unknown</dd></div>
+        </dl>
+        <ul id="nowcast-signals" class="signal-list"></ul>
+      </article>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

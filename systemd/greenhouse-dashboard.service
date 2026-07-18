@@ -1,0 +1,13 @@
+[Unit]
+Description=GREENHOUSE_WIFI dashboard
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/greenhouse-monitor/dashboard
+ExecStart=/usr/bin/node server.js
+Restart=always
+Environment=SENSOR_RECEIVER_URL=http://SENSOR_RECEIVER.lan:8081
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GREENHOUSE_WIFI - Gas History</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <h1>GREENHOUSE_WIFI</h1>
+        <p id="subtitle">Gas History</p>
+      </div>
+      <div class="actions">
+        <div id="live-pill" class="pill warn"><span></span><b>Checking</b></div>
+        <a href="/" class="btn-back">← Back</a>
+      </div>
+    </header>
+
+    <nav class="nav-tabs">
+      <a href="/" data-metric="overview">Overview</a>
+      <a href="/temperature" data-metric="temperature">Temperature</a>
+      <a href="/humidity" data-metric="humidity">Humidity</a>
+      <a href="/pressure" data-metric="pressure">Pressure</a>
+      <a href="/gas" class="active" data-metric="gas">Gas</a>
+      <a href="/history" data-metric="history">History</a>
+    </nav>
+
+    <section class="summary" aria-label="Current gas reading">
+      <article class="metric primary">
+        <div class="metric-head">
+          <span>Gas</span>
+          <span id="gas-validity" class="validity-indicator"><span class="dot"></span><span class="text">--</span></span>
+        </div>
+        <strong id="gas">--</strong>
+        <em id="gas-unit">kΩ</em>
+      </article>
+    </section>
+
+    <section class="trend-grid" aria-label="Gas Trend">
+      <article class="trend panel full-width">
+        <div class="chart-head">
+          <h2>Gas</h2>
+          <div class="chart-controls">
+            <span id="gas-trend-count">0 snapshots</span>
+            <select id="gas-duration" class="duration-select">
+              <option value="1h">1 Hour</option>
+              <option value="6h">6 Hours</option>
+              <option value="12h">12 Hours</option>
+              <option value="24h" selected>24 Hours</option>
+              <option value="7d">7 Days</option>
+              <option value="30d">30 Days</option>
+              <option value="all">All</option>
+            </select>
+          </div>
+        </div>
+        <canvas id="gas-chart" width="1800" height="300"></canvas>
+      </article>
+    </section>
+
+    <section class="details" aria-label="System status">
+      <details id="status-panel" class="panel collapsible">
+        <summary>
+          <h2>Sensor & ESP32 Status</h2>
+        </summary>
+        <dl>
+          <div><dt>Node</dt><dd id="node">--</dd></div>
+          <div><dt>Route</dt><dd id="route">--</dd></div>
+          <div><dt>ESP32 IP</dt><dd id="ip">--</dd></div>
+          <div><dt>Sequence</dt><dd id="seq">--</dd></div>
+          <div><dt>Free Memory</dt><dd id="free-mem">--</dd></div>
+          <div><dt>Uptime</dt><dd id="uptime">--</dd></div>
+          <div><dt>WiFi SSID</dt><dd id="wifi-ssid">--</dd></div>
+          <div><dt>Received</dt><dd id="received">--</dd></div>
+          <div><dt>Age</dt><dd id="age">--</dd></div>
+          <div><dt>Last snapshot</dt><dd id="snapshot">--</dd></div>
+          <div><dt>Next snapshot</dt><dd id="next-snapshot">--</dd></div>
+          <div><dt>Forwarding</dt><dd id="forwarding">SENSOR_RECEIVER</dd></div>
+        </dl>
+      </details>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

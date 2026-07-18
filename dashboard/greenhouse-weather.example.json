@@ -1,0 +1,6 @@
+{
+  "label": "example greenhouse",
+  "latitude": 0,
+  "longitude": 0,
+  "source": "placeholder only; copy to greenhouse-weather.json and set real local values there"
+}

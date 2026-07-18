@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GREENHOUSE_WIFI - Snapshot History</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <h1>GREENHOUSE_WIFI</h1>
+        <p id="subtitle">Snapshot History &amp; Management</p>
+      </div>
+      <div class="actions">
+        <div id="live-pill" class="pill warn"><span></span><b>Checking</b></div>
+        <a href="/" class="btn-back">← Back</a>
+      </div>
+    </header>
+
+    <nav class="nav-tabs">
+      <a href="/" data-metric="overview">Overview</a>
+      <a href="/temperature" data-metric="temperature">Temperature</a>
+      <a href="/humidity" data-metric="humidity">Humidity</a>
+      <a href="/pressure" data-metric="pressure">Pressure</a>
+      <a href="/gas" data-metric="gas">Gas</a>
+      <a href="/history" class="active" data-metric="history">History</a>
+    </nav>
+
+    <section class="summary" aria-label="Current readings">
+      <article class="metric primary">
+        <div class="metric-head">
+          <span>Temperature</span>
+          <small id="temp-c">-- C</small>
+        </div>
+        <strong id="temp-f">--</strong>
+        <em>F</em>
+      </article>
+      <article class="metric">
+        <span>Humidity</span>
+        <strong id="humidity">--</strong>
+        <em>%</em>
+      </article>
+      <article class="metric">
+        <div class="metric-head">
+          <span>Pressure</span>
+          <small id="pressure-trend" class="trend-indicator">--</small>
+        </div>
+        <strong id="pressure">--</strong>
+        <em>hPa</em>
+      </article>
+      <article class="metric">
+        <div class="metric-head">
+          <span>Gas</span>
+          <span id="gas-validity" class="validity-indicator"><span class="dot"></span><span class="text">--</span></span>
+        </div>
+        <strong id="gas">--</strong>
+        <em id="gas-unit">kΩ</em>
+      </article>
+    </section>
+
+    <section class="details" aria-label="Snapshot History Controls">
+      <details class="panel collapsible full-width" open>
+        <summary>
+          <h2>Snapshot History</h2>
+        </summary>
+        <div class="history-controls">
+          <div class="control-group">
+            <label for="history-metric">Metric:</label>
+            <select id="history-metric">
+              <option value="all">All Metrics</option>
+              <option value="temperature">Temperature</option>
+              <option value="humidity">Humidity</option>
+              <option value="pressure">Pressure</option>
+              <option value="gas">Gas</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label for="history-duration">Time Range:</label>
+            <select id="history-duration">
+              <option value="24h">24 Hours</option>
+              <option value="7d">7 Days</option>
+              <option value="30d">30 Days</option>
+              <option value="all" selected>All</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label for="history-limit">Results:</label>
+            <select id="history-limit">
+              <option value="50">50</option>
+              <option value="100" selected>100</option>
+              <option value="200">200</option>
+              <option value="500">500</option>
+              <option value="all">All</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <button id="history-export" class="btn-export">Export CSV</button>
+          </div>
+        </div>
+        <div id="history-list" class="history-list"></div>
+      </details>
+    </section>
+
+    <section class="details" aria-label="Storage Statistics">
+      <details class="panel collapsible full-width" open>
+        <summary>
+          <h2>Storage Statistics</h2>
+        </summary>
+        <div id="storage-stats" class="storage-stats"></div>
+      </details>
+    </section>
+
+    <section class="details" aria-label="System status">
+      <details id="status-panel" class="panel collapsible">
+        <summary>
+          <h2>Sensor & ESP32 Status</h2>
+        </summary>
+        <dl>
+          <div><dt>Node</dt><dd id="node">--</dd></div>
+          <div><dt>Route</dt><dd id="route">--</dd></div>
+          <div><dt>ESP32 IP</dt><dd id="ip">--</dd></div>
+          <div><dt>Sequence</dt><dd id="seq">--</dd></div>
+          <div><dt>Free Memory</dt><dd id="free-mem">--</dd></div>
+          <div><dt>Uptime</dt><dd id="uptime">--</dd></div>
+          <div><dt>WiFi SSID</dt><dd id="wifi-ssid">--</dd></div>
+          <div><dt>Received</dt><dd id="received">--</dd></div>
+          <div><dt>Age</dt><dd id="age">--</dd></div>
+          <div><dt>Last snapshot</dt><dd id="snapshot">--</dd></div>
+          <div><dt>Next snapshot</dt><dd id="next-snapshot">--</dd></div>
+          <div><dt>Forwarding</dt><dd id="forwarding">SENSOR_RECEIVER</dd></div>
+        </dl>
+      </details>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
